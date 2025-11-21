@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/evdev/device.py", line 123, in __init__
+    fd = os.open(dev, os.O_RDWR | os.O_NONBLOCK)
+FileNotFoundError: [Errno 2] No such file or directory: '/dev/input/event2'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dsd2115/macro/passThrough/passThrough_2.py", line 147, in <module>
+    listen_for_events()
+    ~~~~~~~~~~~~~~~~~^^
+  File "/home/dsd2115/macro/passThrough/passThrough_2.py", line 115, in listen_for_events
+    device = evdev.InputDevice(DEVICE_PATH)
+  File "/usr/lib/python3/dist-packages/evdev/device.py", line 125, in __init__
+    fd = os.open(dev, os.O_RDONLY | os.O_NONBLOCK)
+FileNotFoundError: [Errno 2] No such file or directory: '/dev/input/event2'
+프로그램이 종료됩니다!

@@ -1,0 +1,22 @@
+Listening on AULA-F108Pro-1 (/dev/input/event2)
+Traceback (most recent call last):
+  File "/home/dsd2115/macro/passThrough/passThrough_2.py", line 147, in <module>
+    listen_for_events()
+    ~~~~~~~~~~~~~~~~~^^
+  File "/home/dsd2115/macro/passThrough/passThrough_2.py", line 144, in listen_for_events
+    send_hid_report()
+    ~~~~~~~~~~~~~~~^^
+  File "/home/dsd2115/macro/passThrough/passThrough_2.py", line 110, in send_hid_report
+    with open(HID_PATH, 'wb') as fd:
+         ~~~~^^^^^^^^^^^^^^^^
+BlockingIOError: [Errno 11] write could not complete without blocking
+Exception ignored in atexit callback <function exit_print at 0x7f9aaf25c0>:
+Traceback (most recent call last):
+  File "/home/dsd2115/macro/passThrough/passThrough_2.py", line 20, in exit_print
+    release_all()
+  File "/home/dsd2115/macro/common/common.py", line 126, in release_all
+    send_report([0x00] * 8)
+  File "/home/dsd2115/macro/common/common.py", line 72, in send_report
+    with open(DEVICE, "wb") as fd:
+BlockingIOError: [Errno 11] write could not complete without blocking
+프로그램이 종료됩니다!
