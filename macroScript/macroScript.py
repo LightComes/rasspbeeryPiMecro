@@ -15,14 +15,8 @@ def kill_process_by_name(process_name):
     print(f"'{process_name}'을 포함하는 프로세스 검색 및 종료 시도...")
     
     try:
-        # 1. 'ps -ef | grep process_name' 실행
-        #    shell=True를 사용하여 파이프(|) 문법을 셸에서 처리하게 합니다.
-        #    grep 결과에서 자기 자신(grep python...)은 제외하기 위해 [process_name]처럼 대괄호를 사용하기도 합니다.
-        
-        # 실제 명령은 'ps -ef | grep my_script.py'와 유사합니다.
+        # ssh 명령어 수행
         command = f"ps -ef | grep '{process_name}'"
-        
-        # capture_output=True 로 결과(표준 출력)를 받습니다.
         result = subprocess.run(command, shell=True, capture_output=True, text=True, check=True)
         
         # 2. 결과 출력 라인 파싱
@@ -60,11 +54,12 @@ def kill_process_by_name(process_name):
     except Exception as e:
         print(f"예상치 못한 오류: {e}")
 
+
 try:
     print(f"스위치 {SWITCH_PIN}번 핀 테스트 시작. Ctrl+C로 종료.")
 
     macroName = "255_liman.py"
-    macroPath = "/home/dsd2115/rasspbeeryPiMecro/macroScript" + macroName
+    macroPath = "/home/dsd2115/rasspbeeryPiMecro/macroScript/ren" + macroName
 
     while True:
         # 핀 상태 읽기
@@ -94,11 +89,8 @@ try:
                 start_new_session=True) 
             else :
                 print("정상 가동 중")
-                
-
         else:
             kill_process_by_name(macroName)
-            
         time.sleep(1) # 0.5초마다 상태 확인
 
 except KeyboardInterrupt:
