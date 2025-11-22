@@ -1,0 +1,233 @@
+import sys
+import os
+import atexit
+import time
+import threading
+import configparser
+
+current_file_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(os.path.dirname(current_file_dir))
+sys.path.append(parent_dir)
+
+from common.common import key_down, key_up, type_text, release_all, sleep_random, key_click
+
+#종료 시 동작 정의
+def exit_print():
+    print('프로그램이 종료됩니다!')
+    release_all()
+    thread_a.join()
+    thread_b.join()
+    thread_c.join()
+
+#종료 레지스터 등록
+atexit.register(exit_print)
+
+#Flag 선언
+aFlag = True
+bFlag = True
+cFlag = True
+dFlag = True
+
+#변수 선언
+ctrl    = "KEY_LEFTCTRL"
+enter   = "ENTER"
+win     = "GUI"
+shift   = "KEY_LEFTSHIFT"
+alt     = "KEY_LEFTALT"
+right   = "KEY_RIGHT"
+left    = "KEY_LEFT"
+down    = "KEY_DOWN"
+up      = "KEY_UP"
+
+#global 변수
+configReadTime = 5
+moveTime = 3
+v_str = "a"
+thread_0 = ""
+thread_a = ""
+thread_b = ""
+thread_c = ""
+thread_d = ""
+
+
+
+#설정 시 사용 변수 선언 1회만 호출 필요
+config = configparser.ConfigParser()
+
+#설정 값 조회
+def load_config():
+    global configReadTime
+    global moveTime
+    global v_str
+    try:
+        config.read('~/macro/common/config.cfg')
+        # 설정값 가져오기 (형변환 필요)
+        configReadTime  = config.getint('Settings', 'configReadTime')
+        moveTime        = config.getint('Settings', 'moveTime')
+        v_str           = config.get('Settings', 'v_str')
+        # print(f"설정 불러옴: configReadTime={configReadTime}, moveTime={moveTime}, v_str={v_str}")
+    except Exception as e:
+        print(f"설정 파일을 읽는 중 오류 발생: {e}")
+
+#0 설정 조회 반복
+def task_0():
+    #설정 5초마다 가져오기
+    while True :
+        load_config()
+        time.sleep(configReadTime)
+
+#A - 공격 유지
+def task_A() :
+    while aFlag :
+        key_down(ctrl, 0, 0, 0)
+        sleep_random(1000, 0, 5*1000)
+        key_up(ctrl, 0, 0, 0)
+        sleep_random(100, 0, 200)
+        key_click("KEY_S", 0, 0, 0)
+        sleep_random(100, 0, 200)
+
+#B - 점프 반복
+def task_B() :
+    while bFlag :
+        key_click(alt,0,0,100)
+        key_click(alt,50,0,500)
+        sleep_random(1000, 0, 100)
+
+#C - 방향 유지, 변경
+def task_C():
+    arrorSelector = 0
+    while cFlag :
+        arrorSelector += 1
+        if arrorSelector % 2 == 0 :
+            arrow = right
+        else :
+            arrow = left
+
+        key_down(arrow, 0,0,0)
+        sleep_random(moveTime * 1000, 0, 1*1000)
+        key_up(arrow, 0,0,0)
+        sleep_random(0, 0, 300)
+
+#D - 설치기 설치
+def task_D():
+    while dFlag :
+        #60초에 한번씩 설치기 시작
+        sleep_random(50 * 1000, 1 * 1000, 5 * 1000)
+
+        print("설치기 시작. Flag 변경 시작 ")
+        global aFlag
+        global bFlag
+        global cFlag
+        aFlag = False
+        bFlag = False
+        cFlag = False
+
+        global thread_a, thread_b, thread_c
+        thread_a.join()
+        thread_b.join()
+        thread_c.join()
+
+        #모든 키 때기
+        release_all()
+        sleep_random(1 * 100, 0, 300)
+        
+        #공격키 누르기
+        key_down(ctrl, 0, 0, 0)
+        sleep_random(1 * 100, 0, 300)
+
+        #오른쪽 점프
+        key_down(right, 0, 0, 100)
+        for i in range(3) :
+            key_click(alt,0,0,100)
+            key_click(alt,50,0,50)
+            sleep_random(1000, 0, 100)
+        key_up(right, 0, 0, 100)
+        sleep_random(1 * 1000, 0, 300)
+        
+        #왼쪽 이동
+        key_down(left, 0, 0, 100)
+        sleep_random(700, 0, 100)
+        key_up(left, 0, 0, 100)
+        sleep_random(100, 0, 300)
+        
+
+        #위로 점프
+        key_down(up, 0, 0, 100)
+        for i in range(2) :
+            key_click(alt,0,0,100)
+            key_click(alt,0,0,200)
+            sleep_random(1700, 0, 100)
+        key_up(up, 0, 0, 100)
+        sleep_random(100, 0, 100)
+
+        #X클릭
+        key_up(ctrl, 0, 0, 300)
+        key_click('KEY_X', 0, 0, 300)
+        key_down(ctrl, 0, 0, 300)
+        sleep_random(100, 0, 100)
+
+        #왼쪽 이동
+        key_down(left, 0, 0, 100)
+        sleep_random(700, 0, 200)
+        key_up(left, 0, 0, 100)
+        sleep_random(100, 0, 100)
+
+        #shift 클릭
+        key_up(ctrl, 0, 0, 300)
+        key_click(shift, 0, 0, 300)
+        key_down(ctrl, 0, 0, 300)
+        sleep_random(100, 0, 100)
+
+        #아래로 3번
+        key_down(down, 0, 0, 100)
+        for i in range(3) :
+            key_click(alt,0,0,100)
+            sleep_random(2000, 0, 100)
+        key_up(down, 0, 0, 100)
+        sleep_random(500, 0, 100)
+
+        #공격키 때기
+        key_up(ctrl, 0, 0, 300)
+        sleep_random(100, 0, 100)
+
+        #다시 반복 시작
+        aFlag = True
+        bFlag = True
+        cFlag = True
+
+        thread_a = threading.Thread(target=task_A)
+        thread_b = threading.Thread(target=task_B)
+        thread_c = threading.Thread(target=task_C)
+        thread_a.start()
+        thread_b.start()
+        thread_c.start()
+
+
+
+
+if __name__ == "__main__":
+    print("메인 스레드 시작")
+
+    #설정 세팅
+    load_config()
+
+    #thread_0 = threading.Thread(target=task_0)
+    thread_a = threading.Thread(target=task_A)
+    thread_b = threading.Thread(target=task_B)
+    thread_c = threading.Thread(target=task_C)
+    thread_d = threading.Thread(target=task_D)
+
+    # 1. 스레드를 시작합니다.
+    #thread_0.start()
+    thread_a.start()
+    thread_b.start()
+    thread_c.start()
+    thread_d.start()
+
+
+    # 2. 메인 스레드가 thread_a가 종료될 때까지 기다립니다.
+    #thread_0.join()
+    thread_a.join()
+    thread_b.join()
+    thread_c.join()
+    thread_d.join()
