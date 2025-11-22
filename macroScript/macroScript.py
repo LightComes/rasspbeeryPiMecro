@@ -1,17 +1,14 @@
 import lgpio
 import time
 import subprocess
+import RPi.GPIO as GPIO
 
 # GPIO 핀 설정 (예시: GPIO 17번 핀 사용)
+GPIO.setmode(GPIO.BCM)
 SWITCH_PIN = 18
 
 # 1. GPIO 칩 핸들(handle) 열기
-h = lgpio.gpiochip_open(0) 
-
-# 2. GPIO 핀을 입력 모드로 설정하고 풀업/풀다운 저항 설정
-# 버튼을 눌렀을 때 3.3V(HIGH)가 들어오게 하려면 풀다운 저항 사용 (LGH_PULL_DOWN)
-lgpio.gpio_claim_input(h, SWITCH_PIN) 
-# lgpio.gpio_claim_input(h, SWITCH_PIN, lgpio.LGH_PULL_DOWN) # 저항 설정 옵션 추가 가능
+GPIO.setup(SWITCH_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 
 def kill_process_by_name(process_name):
@@ -71,9 +68,7 @@ try:
 
     while True:
         # 핀 상태 읽기
-        pin_state = lgpio.gpio_read(h, SWITCH_PIN)
-        
-        if pin_state == 0:
+        if GPIO.input(SWITCH_PIN) == GPIO.HIGH:
             #실행 중인 메크로 검사
             command = f"ps -ef | grep '{macroName}'"
             result = subprocess.run(command, shell=True, capture_output=True, text=True, check=True)
@@ -110,8 +105,8 @@ except KeyboardInterrupt:
     print("사용자 종료 요청.")
 
 finally:
-    # 3. 프로그램 종료 시 GPIO 칩 닫기
-    lgpio.gpiochip_close(h)
+    # 종료 시 GPIO 설정 초기화 (권장)
+    GPIO.cleanup()
     print("GPIO 정리 완료.")
 
 
