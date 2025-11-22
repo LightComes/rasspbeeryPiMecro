@@ -94,12 +94,16 @@ CUSTOM_FKEY_MAP = {
 }
 
 device = evdev.InputDevice(DEVICE_PATH)
-print(f"Listening on {device.name} ({DEVICE_PATH})")
-
-MODIFIER_KEYS = {
-    'KEY_LEFTCTRL': 0x01, 'KEY_LEFTSHIFT': 0x02, 'KEY_LEFTALT': 0x04, 'KEY_LEFTMETA': 0x08,
-    'KEY_RIGHTCTRL': 0x10, 'KEY_RIGHTSHIFT': 0x20, 'KEY_RIGHTALT': 0x40, 'KEY_RIGHTMETA': 0x80,
-}
+if device.name in "DURGOD" :
+    MODIFIER_KEYS = {
+        'KEY_LEFTCTRL': 0x01, 'KEY_LEFTSHIFT': 0x02, 'KEY_LEFTMETA': 0x04, 'KEY_LEFTALT': 0x08,
+        'KEY_RIGHTCTRL': 0x10, 'KEY_RIGHTSHIFT': 0x20, 'KEY_RIGHTALT': 0x80, 'KEY_RIGHTMETA': 0x40,
+    }
+else :
+    MODIFIER_KEYS = {
+        'KEY_LEFTCTRL': 0x01, 'KEY_LEFTSHIFT': 0x02, 'KEY_LEFTALT': 0x04, 'KEY_LEFTMETA': 0x08,
+        'KEY_RIGHTCTRL': 0x10, 'KEY_RIGHTSHIFT': 0x20, 'KEY_RIGHTALT': 0x40, 'KEY_RIGHTMETA': 0x80,
+    }
 
 pressed_keys = set()
 pressed_modifiers = 0
