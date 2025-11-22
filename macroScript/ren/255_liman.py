@@ -171,24 +171,24 @@ def task_D():
             thread_c.start()
 
 
-    if __name__ == "__main__":
-        print("메인 스레드 시작")
+if __name__ == "__main__":
+    print("메인 스레드 시작")
 
-        thread_a = threading.Thread(target=task_A)
-        thread_b = threading.Thread(target=task_B)
-        thread_c = threading.Thread(target=task_C)
-        thread_d = threading.Thread(target=task_D)
+    thread_a = threading.Thread(target=task_A)
+    thread_b = threading.Thread(target=task_B)
+    thread_c = threading.Thread(target=task_C)
+    thread_d = threading.Thread(target=task_D)
 
-        # 1. 스레드를 시작합니다.
-        thread_a.start()
-        thread_b.start()
-        thread_c.start()
-        thread_d.start()
-        
+    # 1. 스레드를 시작합니다.
+    thread_a.start()
+    thread_b.start()
+    thread_c.start()
+    thread_d.start()
+    
 
 
-        # 2. 메인 스레드가 thread_a가 종료될 때까지 기다립니다.
-        # thread_a.join()
-        # thread_b.join()
-        # thread_c.join()
-        # thread_d.join()
+    # 2. 메인 스레드가 thread_a가 종료될 때까지 기다립니다.
+    # thread_a.join()
+    # thread_b.join()
+    # thread_c.join()
+    # thread_d.join()
