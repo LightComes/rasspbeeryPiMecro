@@ -37,6 +37,7 @@ left    = "KEY_LEFT"
 down    = "KEY_DOWN"
 up      = "KEY_UP"
 
+moveTime = 3
 
 #A - 공격 유지
 def task_A() :
