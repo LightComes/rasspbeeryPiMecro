@@ -47,7 +47,7 @@ def task_A() :
         key_up(ctrl, 0, 0, 0)
         sleep_random(0, 0, 300)
         key_click("KEY_S", 0, 0, 0)
-        sleep_random(300, 0, 200)
+        sleep_random(500, 0, 200)
     else :
         time.sleep(0.1)
 
