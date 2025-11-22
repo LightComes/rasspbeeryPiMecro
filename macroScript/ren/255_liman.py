@@ -15,6 +15,7 @@ from common.common import key_down, key_up, type_text, release_all, sleep_random
 def exit_print():
     print('프로그램이 종료됩니다!')
     release_all()
+    time.sleep(0.2)
 
 #종료 레지스터 등록
 atexit.register(exit_print)
@@ -36,41 +37,27 @@ left    = "KEY_LEFT"
 down    = "KEY_DOWN"
 up      = "KEY_UP"
 
-#global 변수
-configReadTime = 5
-moveTime = 3
-v_str = "a"
-thread_0 = ""
-thread_a = ""
-thread_b = ""
-thread_c = ""
-thread_d = ""
-asisBoolean = True
-
-
-
-#0 설정 조회 반복
-def task_0():
-    #설정 5초마다 가져오기
-    while True :
-        time.sleep(1)
 
 #A - 공격 유지
 def task_A() :
-    while aFlag :
-        key_down(ctrl, 0, 0, 0)
-        sleep_random(1000, 0, 5*1000)
-        key_up(ctrl, 0, 0, 0)
-        sleep_random(0, 0, 300)
-        key_click("KEY_S", 0, 0, 0)
-        sleep_random(100, 0, 300)
+    while True :
+        if aFlag :
+            key_down(ctrl, 0, 0, 0)
+            sleep_random(1000, 0, 5*1000)
+            key_up(ctrl, 0, 0, 0)
+            sleep_random(0, 0, 300)
+            key_click("KEY_S", 0, 0, 0)
+            sleep_random(100, 0, 300)
+        else :
+            time.sleep(0.1)
 
 #B - 점프 반복
 def task_B() :
-    while bFlag :
-        key_click(alt,0,0,100)
-        key_click(alt,10,0,30)
-        sleep_random(1000, 0, 100)
+    while True :
+        if bFlag :
+            key_click(alt,0,0,100)
+            key_click(alt,10,0,30)
+            sleep_random(1000, 0, 100)
 
 #C - 방향 유지, 변경
 def task_C():
@@ -184,14 +171,12 @@ def task_D():
 if __name__ == "__main__":
     print("메인 스레드 시작")
 
-    #thread_0 = threading.Thread(target=task_0)
     thread_a = threading.Thread(target=task_A)
     thread_b = threading.Thread(target=task_B)
     thread_c = threading.Thread(target=task_C)
     thread_d = threading.Thread(target=task_D)
 
     # 1. 스레드를 시작합니다.
-    #thread_0.start()
     thread_a.start()
     thread_b.start()
     thread_c.start()
@@ -200,7 +185,6 @@ if __name__ == "__main__":
 
 
     # 2. 메인 스레드가 thread_a가 종료될 때까지 기다립니다.
-    #thread_0.join()
     thread_a.join()
     thread_b.join()
     thread_c.join()

@@ -67,7 +67,7 @@ try:
     print(f"스위치 {SWITCH_PIN}번 핀 테스트 시작. Ctrl+C로 종료.")
 
     macroName = "255_liman.py"
-    macroPath = "/home/dsd2115/macro/macroScript/ren/" + macroName
+    macroPath = "/home/dsd2115/rasspbeeryPiMecro/macroScript" + macroName
 
     while True:
         # 핀 상태 읽기

@@ -93,9 +93,6 @@ CUSTOM_FKEY_MAP = {
     'KEY_VOLUMEUP': 'KEY_F12',
 }
 
-device = evdev.InputDevice(DEVICE_PATH)
-print(f"Listening on {device.name} ({DEVICE_PATH})")
-
 MODIFIER_KEYS = {
     'KEY_LEFTCTRL': 0x01, 'KEY_LEFTSHIFT': 0x02, 'KEY_LEFTALT': 0x04, 'KEY_LEFTMETA': 0x08,
     'KEY_RIGHTCTRL': 0x10, 'KEY_RIGHTSHIFT': 0x20, 'KEY_RIGHTALT': 0x40, 'KEY_RIGHTMETA': 0x80,

@@ -72,8 +72,8 @@ KEY_MAP = {
     'KEY_HANJA': 0x91,
 
     # 수정키
-    'KEY_LEFTCTRL': 0xE0, 'KEY_LEFTSHIFT': 0xE1, 'KEY_LEFTALT': 0xE2,
-    'KEY_LEFTMETA': 0xE3, 'KEY_RIGHTCTRL': 0xE4, 'KEY_RIGHTSHIFT': 0xE5,
+    'KEY_LEFTCTRL': 0xE0, 'KEY_LEFTSHIFT': 0xE1, 'KEY_LEFTMETA': 0xE2,
+    'KEY_LEFTALT': 0xE3, 'KEY_RIGHTCTRL': 0xE4, 'KEY_RIGHTSHIFT': 0xE5,
     'KEY_RIGHTALT': 0xE6, 'KEY_RIGHTMETA': 0xE7,
 }
 
@@ -93,12 +93,9 @@ CUSTOM_FKEY_MAP = {
     'KEY_VOLUMEUP': 'KEY_F12',
 }
 
-device = evdev.InputDevice(DEVICE_PATH)
-print(f"Listening on {device.name} ({DEVICE_PATH})")
-
 MODIFIER_KEYS = {
-    'KEY_LEFTCTRL': 0x01, 'KEY_LEFTSHIFT': 0x02, 'KEY_LEFTALT': 0x04, 'KEY_LEFTMETA': 0x08,
-    'KEY_RIGHTCTRL': 0x10, 'KEY_RIGHTSHIFT': 0x20, 'KEY_RIGHTALT': 0x40, 'KEY_RIGHTMETA': 0x80,
+    'KEY_LEFTCTRL': 0x01, 'KEY_LEFTSHIFT': 0x02, 'KEY_LEFTMETA': 0x04, 'KEY_LEFTALT': 0x08,
+    'KEY_RIGHTCTRL': 0x10, 'KEY_RIGHTSHIFT': 0x20, 'KEY_RIGHTALT': 0x80, 'KEY_RIGHTMETA': 0x40,
 }
 
 pressed_keys = set()
@@ -145,6 +142,6 @@ def listen_for_events():
                 pressed_keys.discard(keycode)
 
         send_hid_report()
-
+        print(keycode)
 if __name__ == "__main__":
     listen_for_events()
